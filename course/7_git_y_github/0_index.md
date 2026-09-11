@@ -4,7 +4,7 @@ title: "Git y GitHub"
 nav_title: "Git y GitHub"
 summary: "Dos secciones. Primero Git en tu propia máquina, sin internet. Después GitHub, y el flujo con el que se entrega todo el resto del curso."
 status: ready
-estimated_time: 229m
+estimated_time: 312m
 tags: [git, github, ssh, commit, branch, merge, fork, pull-request, flujo]
 prerequisites: [expresiones-regulares]
 ---
@@ -18,7 +18,7 @@ prerequisites: [expresiones-regulares]
 - **Git es una herramienta que vive en tu máquina y no sabe qué es internet.** GitHub es una empresa que hospeda repositorios de Git y le agrega encima lo que Git no tiene.
 - Son cosas distintas, y por eso la unidad está partida en **dos secciones**.
 - La primera no toca la red ni una vez. La segunda es toda red.
-- Al final vas a abrir un pull request. Ése es el examen práctico de la unidad.
+- Al final vas a abrir un pull request. Ésa es la entrega de la unidad, y el formato de todas las que siguen.
 
 ## Las dos secciones
 
@@ -27,7 +27,7 @@ prerequisites: [expresiones-regulares]
 | Sección | Empieza en | Acaba cuando | Páginas | Tiempo |
 |---|---|---|---:|---:|
 | **[[seccion-git|1. Git]]** | La historia del problema, en 2005 | Puedes predecir un conflicto antes de provocarlo, sin conexión | 7 | 122 min |
-| **[[seccion-github|2. GitHub]]** | Tu cuenta y tu llave SSH | Tu pull request está abierto y en verde | 6 | 102 min |
+| **[[seccion-github|2. GitHub]]** | Git contra GitHub, en una tabla | Tu pull request está abierto y en verde | 6 | 140 min |
 
 :::
 
@@ -51,12 +51,14 @@ En la sección de GitHub aparece todo eso de golpe, y con ello la parte que se u
 
 | # | Página | Qué agrega | Tiempo |
 |---:|---|---|---:|
-| 1 | [[cuenta-y-llave|Cuenta y llave]] | La cuenta y el par de llaves SSH. **Setup previo a clase** | 25 min |
-| 2 | [[clonar-y-actualizar|Clonar y mantener al día]] | El repositorio del curso en tu disco. **Setup previo a clase** | 20 min |
-| 3 | [[git-no-es-github|Git no es GitHub]] | El fork, `upstream` y `origin`, y arreglar tus remotes | 25 min |
-| 4 | [[dos-personas-un-archivo|Dos personas, un archivo]] | Qué pasa cuando dos trabajan a la vez, y quién gana | 12 min |
-| 5 | [[el-flujo-del-curso|El flujo del curso]] | La zona roja y la verde, y la regla del mirror | 15 min |
-| 6 | [[el-ritual-del-curso|El ritual]] | Los tres bloques, en orden, con sus comandos | 10 min |
+| 1 | [[github-en-corto|GitHub, en corto]] | El ciclo de código abierto, Git vs GitHub, y las dos comprobaciones | 15 min |
+| 2 | [[el-fork|El fork y tus dos remotes]] | Cómo se hace el fork, `upstream` y `origin`, y los dos caminos para sincronizar | 30 min |
+| 3 | [[branches-en-serio|Branches, en serio]] | Qué le hace `switch` a tu disco, resolver un conflicto, la branch atrasada | 35 min |
+| 4 | [[el-flujo-del-curso|La zona roja y tu espejo]] | Dónde va cada archivo, por qué, y qué revisa la revisión automática | 20 min |
+| 5 | [[el-ritual-del-curso|El ritual]] | Los tres bloques, y qué hace cada comando del flujo | 25 min |
+| 6 | [[tu-primer-pull-request|Tu primer pull request]] | La entrega de verdad, de principio a fin | 15 min |
+
+El trabajo previo a clase —cuenta, llave SSH y clonado— vive en el apéndice: [[cuenta-y-llave|Cuenta y llave]] y [[clonar-y-actualizar|Clonar y mantener al día]], 45 minutos que ya hiciste antes de la sesión. Las dos secciones son 262 minutos; con el apéndice y el [[cheatsheet-git|cheatsheet]], la unidad completa son 312.
 
 ### Para consultar después
 
@@ -66,7 +68,7 @@ En la sección de GitHub aparece todo eso de golpe, y con ello la parte que se u
 
 ## En qué orden leerlas
 
-Las dos primeras páginas de la sección de GitHub son el setup que se pidió **antes** de clase, así que en el calendario van primero. Están archivadas bajo GitHub porque eso es lo que son: crear una cuenta y una llave no tiene nada que ver con Git como herramienta.
+Las dos hojas del apéndice —cuenta y llave, y clonar— son el setup que se pidió **antes** de clase. Están archivadas bajo GitHub porque eso es lo que son: crear una cuenta y una llave no tiene nada que ver con Git como herramienta.
 
 Para leer la unidad completa, el orden natural es el de arriba: Git entero, y después GitHub. **La sección de Git no necesita nada de la de GitHub**, ni siquiera la llave SSH.
 

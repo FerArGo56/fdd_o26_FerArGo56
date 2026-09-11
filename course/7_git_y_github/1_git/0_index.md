@@ -2,7 +2,7 @@
 id: seccion-git
 title: "Git"
 nav_title: "Git"
-summary: "La herramienta que vive en tu máquina y no sabe qué es internet. Seis páginas sin conexión, en un repositorio de juguete que existe para romperse."
+summary: "La herramienta que vive en tu máquina y no sabe qué es internet. Siete páginas sin conexión, en un repositorio de juguete que existe para romperse."
 status: ready
 estimated_time: 122m
 tags: [git, commit, staging, branch, merge, deshacer]
@@ -59,4 +59,4 @@ Necesitas **2.23 o más nueva**, de 2019, porque la sección usa `git switch` y 
 
 ## Cierre
 
-Cuando termines las seis páginas, sigue con [[seccion-github|GitHub]], donde por fin aparece la red.
+Cuando termines las siete páginas, sigue con [[seccion-github|GitHub]], donde por fin aparece la red.

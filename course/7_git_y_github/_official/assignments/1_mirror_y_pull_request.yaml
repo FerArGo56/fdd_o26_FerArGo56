@@ -12,10 +12,11 @@ content:
     Comprueba lo último con git remote -v: tienen que salir cuatro líneas, dos
     de origin con tu usuario y dos de upstream con raya-lucaria. Si las cuatro
     dicen raya-lucaria, todavía no arreglaste los remotes y nada de lo que
-    sigue va a funcionar. Está en la página Git no es GitHub.
+    sigue va a funcionar. Está en la página El fork y tus dos remotes.
     Lo que hay que entregar son cuatro cosas. Una, tu carpeta en estudiantes,
-    con un nombre idéntico a tu usuario de GitHub. Ese nombre lo obtienes con
-    un comando y no lo escribes a mano: gh api user seguido de jq punto login.
+    con un nombre idéntico a tu usuario de GitHub. Ese nombre sale de la URL de tu
+    propio fork y lo dejas guardado en la variable GHUSER, en el perfil de tu
+    shell, para no teclearlo cada vez.
     Dos, dentro de ella la carpeta 07 guion bajo git, con el contenido copiado
     de la carpeta codigo del mismo nombre, respetando la regla del mirror.
     Tres, el archivo bitacora punto md lleno: tus datos, la salida de los dos
@@ -32,8 +33,9 @@ content:
     ellos, la segunda vez que corras el comando acabas con 07 guion bajo git
     dentro de 07 guion bajo git, y la revisión automática lo deja pasar porque
     técnicamente está dentro de tu carpeta. No copies arrastrando en el Finder
-    ni en el Explorador: producen nombres con la palabra copia y ésos sí se
-    rechazan.
+    ni en el Explorador: producen nombres con la palabra copia, que no son el
+    nombre del espejo. La revision automatica no los detecta, asi que ese error
+    llega hasta mi y cuenta como entrega mal hecha.
     Sabrás que terminaste cuando el pull request esté abierto y su revisión
     automática esté en verde. Ese es el criterio: entregado significa pull
     request abierto antes de la fecha, con el check en verde. Que yo lo mergee
@@ -45,7 +47,7 @@ content:
     izquierda tiene que decir raya-lucaria diagonal fdd o26 y main. Si dice tu
     propio usuario, el pull request se crea, se ve bien, y no me llega. Revisa
     esa barra antes de darle crear.
-    El flujo completo, en tres bloques, está en la última página de la unidad.
+    El flujo completo, en tres bloques, está en la página El ritual.
     Vale la pena que lo hagas hasta que salga sin pensar, porque se pregunta de
     memoria en el examen y porque todas las tareas de aquí a diciembre se
     entregan así.
@@ -55,11 +57,14 @@ content:
     - title: "Unidad — El flujo del curso"
       url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-flujo-del-curso/"
       note: "La zona roja y la verde, la regla del mirror y qué revisa el robot."
+    - title: "Unidad — Tu primer pull request"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/tu-primer-pull-request/"
+      note: "Esta misma entrega, guiada paso a paso de principio a fin."
     - title: "Unidad — El ritual"
       url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-ritual/"
       note: "Los tres bloques con sus comandos exactos, y la barra del pull request."
-    - title: "Unidad — Git no es GitHub"
-      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/git-no-es-github/"
+    - title: "Unidad — El fork y tus dos remotes"
+      url: "https://rayalucaria.org/fdd_o26/git-y-github/github/el-fork/"
       note: "El fork, tu login exacto y cómo arreglar los remotes."
     - title: "Unidad — Cheatsheet"
       url: "https://rayalucaria.org/fdd_o26/git-y-github/cheatsheet/"

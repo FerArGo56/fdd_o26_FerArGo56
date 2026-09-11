@@ -135,7 +135,7 @@ git status
 
 `.gitkeep` **no es una función de Git**. Git no conoce ese nombre ni le da trato especial: es un archivo vacío como cualquier otro, y funciona porque existir es suficiente. Podría llamarse `pon-algo-aqui.txt` y daría igual. Se usa `.gitkeep` porque todo el mundo lo entiende.
 
-Esto va a importar en la página 11, cuando tengas que crear tu carpeta de entregas antes de tener algo que poner en ella.
+Esto va a importar en [[el-fork|la sección de GitHub]], cuando tengas que crear tu carpeta de entregas antes de tener algo que poner en ella.
 
 ::: problem {#git-p5-blob title="Dos archivos, un contenido"}
 En un repositorio nuevo creas `notas/uno.txt` y `borradores/dos.txt`, y los dos tienen exactamente el mismo texto adentro. Haces `git add` de los dos y commiteas.

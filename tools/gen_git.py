@@ -281,7 +281,7 @@ def git_lo_que_no_se_sube():
 
     monton = [
         ("ejemplo.sh", ACENTO, "lo escribiste tú"),
-        ("notas.md", ACENTO, "lo escribiste tú"),
+        ("bitacora.md", ACENTO, "lo escribiste tú"),
         (".DS_Store", ROJO, "lo puso el Finder"),
         ("__pycache__/", ROJO, "lo puso Python"),
         (".env", ROJO, "tus credenciales"),
@@ -298,7 +298,7 @@ def git_lo_que_no_se_sube():
         y += 50
 
     p.append(caja(560, 78, 480, 340, PANEL, ACENTO))
-    p.append(teclado(800, 112, "git add ejemplo.sh notas.md", ACENTO, 15))
+    p.append(teclado(800, 112, "git add ejemplo.sh bitacora.md", ACENTO, 15))
     p.append(texto(800, 136, "se lleva las dos que nombraste", ACENTO, 13.5))
     y = 164
     for nombre, color, glosa in monton:
@@ -586,38 +586,39 @@ def git_el_mirror():
             y += 34
         return salida
 
-    p.append(caja(40, 82, 420, 236, PANEL, ROJO))
+    p.append(caja(40, 82, 420, 250, PANEL, ROJO))
     p.append(texto(250, 112, "zona roja — sólo lectura", ROJO, 15, peso="600"))
-    p.extend(arbol(70, 152, ROJO, [
+    p.extend(arbol(70, 146, ROJO, [
         (0, "codigo/", False), (1, "07_git/", True),
-        (2, "ejemplo.sh", False), (2, "notas.md", False),
+        (2, "ejemplo.sh", False), (2, "bitacora.md", False),
     ]))
-    p.append(texto(250, 300, "lo que yo publico. No lo edites.", SUAVE, 12.5))
+    p.append(texto(250, 318, "lo que yo publico. No lo edites.", SUAVE, 12.5))
 
-    p.append(caja(620, 82, 420, 236, PANEL, ACENTO))
+    p.append(caja(620, 82, 420, 250, PANEL, ACENTO))
     p.append(texto(830, 112, "zona verde — tuya", ACENTO, 15, peso="600"))
-    p.extend(arbol(650, 152, ACENTO, [
+    p.extend(arbol(650, 146, ACENTO, [
         (0, "estudiantes/", False), (1, "tu-login/", False),
         (2, "07_git/", True), (3, "ejemplo.sh", False),
+        (3, "bitacora.md", False),
     ]))
-    p.append(texto(830, 300, "aquí trabajas. Sólo aquí.", SUAVE, 12.5))
+    p.append(texto(830, 318, "aquí trabajas. Sólo aquí.", SUAVE, 12.5))
 
     p.append(flecha(468, 196, 612, 196, ACENTO, 2.5))
     p.append(chip(540, 168, "copiar", ACENTO, tam=13))
 
-    p.append(caja(120, 350, 840, 64, FONDO, ACENTO, radio=10, grosor=1.6))
-    p.append(teclado(540, 378, "cp -r codigo/07_git/. estudiantes/$U/07_git/", ACENTO, 16))
-    p.append(texto(540, 402, "la barra y el punto copian el contenido, no la carpeta: sin ellos acabas con 07_git dentro de 07_git", SUAVE, 12))
+    p.append(caja(120, 360, 840, 64, FONDO, ACENTO, radio=10, grosor=1.6))
+    p.append(teclado(540, 388, "cp -r codigo/07_git/. estudiantes/$GHUSER/07_git/", ACENTO, 16))
+    p.append(texto(540, 412, "la barra y el punto copian el contenido, no la carpeta: sin ellos acabas con 07_git dentro de 07_git", SUAVE, 12))
 
-    p.append(texto(ancho / 2, 448, "El nombre 07_git no se inventa ni se traduce: es el mismo de los dos lados, y el robot lo compara.", SUAVE, 13.5))
+    p.append(texto(ancho / 2, 448, "El nombre 07_git no se inventa ni se traduce: es el mismo de los dos lados. Esto lo reviso yo, no la revisión automática.", SUAVE, 13.5))
     p.append(texto(ancho / 2, 474, "Tu carpeta se llama exactamente como tu usuario de GitHub, que sale de un comando y no del teclado.", SUAVE, 13.5))
     p.append(cierre())
     return "".join(p)
 
 
 def git_el_ritual():
-    """Los doce pasos, en tres bloques con nombre."""
-    ancho, alto = 1080, 560
+    """El flujo completo, en tres bloques con nombre."""
+    ancho, alto = 1080, 580
     aria = (
         "Tres carriles verticales con el flujo completo. El primero, ponte al "
         "dia, sincroniza main con el repositorio del curso y actualiza tu fork. "
@@ -630,36 +631,36 @@ def git_el_ritual():
 
     bloques = [
         (40, ACENTO, "A", "Ponte al día",
-         ["cd ~/fdd/fdd_o26", "git switch main", "git fetch upstream",
-          "git merge upstream/main", "git push origin main"],
-         "Tu main queda idéntico al del curso."),
+         ["git switch main", "git fetch upstream", "git merge upstream/main",
+          "git push origin main", ""],
+         "Tu main queda igual al del curso."),
         (373, AMBAR, "B", "Abre tu espacio",
-         ["git switch -c tarea-07-git", "mkdir -p estudiantes/$U/07_git",
-          "cp -r codigo/07_git/. \u2192 tu carpeta", "", "y trabaja sólo ahí dentro"],
-         "Nunca en main. Nunca fuera de tu carpeta."),
+         ["git switch -c tarea-07-git", "mkdir -p estudiantes/$GHUSER/07_git",
+          "cp -r codigo/07_git/. \u2192 ahí", "", "y trabaja sólo ahí dentro"],
+         "Nunca en main. Sólo tu carpeta."),
         (706, CIAN, "C", "Entrega",
-         ["git status", "git add estudiantes/$U/07_git", "git status",
+         ["git status", "git add estudiantes/$GHUSER/...", "git status",
           "git commit -m \"...\"", "git push -u origin tarea-07-git"],
-         "Y abre el pull request en el navegador."),
+         "Y abre el pull request."),
     ]
     for x, color, letra, titulo, pasos, cierre_txt in bloques:
         cx = x + 167
-        p.append(caja(x, 80, 334, 372, PANEL, color))
+        p.append(caja(x, 80, 334, 392, PANEL, color))
         p.append(estado(cx, 118, letra, r=24, borde=color, color_texto=color))
         p.append(texto(cx, 168, titulo, color, 18, peso="600"))
         y = 200
         for paso in pasos:
             if paso:
                 p.append(caja(x + 20, y, 294, 36, FONDO, color, radio=7, grosor=1.2))
-                p.append(teclado(cx, y + 24, paso, color, 12.5, peso="normal"))
+                p.append(teclado(cx, y + 24, paso, color, 12, peso="normal"))
             y += 44
-        p.append(texto(cx, 428, cierre_txt, SUAVE, 12.5))
+        p.append(texto(cx, 448, cierre_txt, SUAVE, 12.5))
 
-    p.append(flecha(384, 266, 364, 266, SUAVE, 2))
-    p.append(flecha(717, 266, 697, 266, SUAVE, 2))
+    for x in (373, 706):
+        p.append(flecha(x - 26, 276, x - 6, 276, SUAVE, 2))
 
-    p.append(texto(ancho / 2, 494, "Los dos git status del bloque C no son adorno: son el hábito que evita subir basura. Míralos de verdad.", TEXTO, 14, peso="600"))
-    p.append(texto(ancho / 2, 522, "El último paso es comprobar que el robot quedó en verde. Sin eso no entregaste, aunque el pull request exista.", SUAVE, 13.5))
+    p.append(texto(ancho / 2, 512, "Paso 0, una sola vez en el semestre: el fork en el navegador, y después git remote rename origin upstream + git remote add origin.", SUAVE, 13))
+    p.append(texto(ancho / 2, 540, "No hay cuarto bloque: el A ya te devuelve a main, y la branch vieja la borra el botón Delete branch del propio pull request.", TEXTO, 13.5, peso="600"))
     p.append(cierre())
     return "".join(p)
 
@@ -852,6 +853,219 @@ def git_paralelo_raros():
     return "".join(p)
 
 
+def git_branch_disco():
+    """Cambiar de branch reescribe la carpeta: el mismo ls, dos resultados."""
+    ancho, alto = 1080, 520
+    aria = (
+        "La misma carpeta vista desde dos branches. A la izquierda, parado en "
+        "la branch de tarea, el listado muestra el archivo de trabajo. A la "
+        "derecha, despues de cambiarse a main, el mismo listado ya no lo "
+        "muestra. Abajo, la cadena de commits explica por que: el archivo vive "
+        "en el commit de la branch, y main nunca lo tuvo"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 40, "El archivo no se borró: tu carpeta se sincronizó con otro punto de la historia", TEXTO, 20, peso="600"))
+
+    paneles = [
+        (40, AMBAR, "git switch tarea-07-git",
+         ["estudiantes/tu-login/", "└── nota.txt", ""], True,
+         "nota.txt está"),
+        (566, ACENTO, "git switch main",
+         ["estudiantes/tu-login/", "(vacía)", ""], False,
+         "nota.txt no está"),
+    ]
+    for x, color, cmd, filas, tiene, pie in paneles:
+        cx = x + 237
+        p.append(caja(x, 72, 474, 214, PANEL, color))
+        p.append(caja(x + 20, 90, 434, 38, FONDO, color, radio=7, grosor=1.2))
+        p.append(teclado(cx, 115, cmd, color, 15))
+        p.append(texto(x + 34, 158, "ls estudiantes/tu-login", SUAVE, 13, anclaje="start"))
+        y = 186
+        for fila in filas:
+            if fila:
+                col = AMBAR if (tiene and "nota" in fila) else TEXTO
+                p.append(teclado(x + 34, y, fila, col, 14, anclaje="start", peso="normal"))
+            y += 28
+        p.append(texto(cx, 268, pie, color, 14, peso="600"))
+
+    p.append(flecha(522, 180, 560, 180, SUAVE, 2))
+
+    p.append(texto(ancho / 2, 330, "Y sin embargo el archivo sigue guardado: vive en el commit de la branch", TEXTO, 16, peso="600"))
+
+    ejes = [(300, 400, "C1"), (430, 400, "C2"), (560, 400, "C3")]
+    for i, (x, y, etq) in enumerate(ejes):
+        p.append(estado(x, y, etq, r=22, borde=ACENTO, color_texto=ACENTO))
+        if i:
+            p.append(flecha(ejes[i - 1][0] + 24, y, x - 24, y, ACENTO, 2))
+    p.append(chip(560, 356, "main", ACENTO, tam=13))
+
+    p.append(estado(700, 400, "C4", r=22, borde=AMBAR, color_texto=AMBAR))
+    p.append(flecha(584, 400, 676, 400, AMBAR, 2))
+    p.append(chip(700, 356, "tarea-07-git", AMBAR, tam=13))
+    p.append(texto(700, 448, "aquí vive nota.txt", AMBAR, 13))
+    p.append(texto(430, 448, "aquí nunca existió", SUAVE, 13))
+
+    p.append(texto(ancho / 2, 492, "Por eso Git se niega a cambiar de branch con trabajo sin commitear: el switch lo sobrescribiría.", SUAVE, 13.5))
+    p.append(cierre())
+    return "".join(p)
+
+
+def git_branch_atrasada():
+    """La branch que nace de un main viejo, y el merge que la rescata."""
+    ancho, alto = 1080, 580
+    aria = (
+        "Dos escenarios comparados. Arriba, la branch nace de un main atrasado "
+        "y el pull request muestra como diferencia propia los commits del curso "
+        "que faltaban, ademas de los archivos del estudiante. Abajo, la misma "
+        "branch despues de traer main con un merge, y el pull request muestra "
+        "solo los archivos del estudiante"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 40, "El pull request compara contra el punto donde las historias se separaron", TEXTO, 20, peso="600"))
+
+    filas = [
+        (72, ROJO, "Sin el bloque A", False,
+         "11 archivos: 9 del curso + 2 tuyos", "La revisión lo rechaza"),
+        (320, ACENTO, "Con el bloque A, o con git merge main", True,
+         "2 archivos: sólo los tuyos", "La revisión lo acepta"),
+    ]
+    for y0, color, titulo, aldia, veredicto, pie in filas:
+        p.append(caja(40, y0, 1000, 212, PANEL, color))
+        p.append(texto(64, y0 + 30, titulo, color, 17, anclaje="start", peso="600"))
+
+        base_y = y0 + 92
+        xs = [110, 200, 290, 380]
+        for i, x in enumerate(xs):
+            p.append(estado(x, base_y, f"c{i + 1}", r=20, borde=SUAVE, color_texto=SUAVE))
+            if i:
+                p.append(flecha(xs[i - 1] + 22, base_y, x - 22, base_y, SUAVE, 1.8))
+        p.append(chip(505, base_y, "main del curso", SUAVE, tam=12))
+
+        ramo_y = y0 + 168
+        p.append(estado(250, ramo_y, "t1", r=20, borde=color, color_texto=color))
+        p.append(estado(340, ramo_y, "t2", r=20, borde=color, color_texto=color))
+        p.append(flecha(126, base_y + 18, 232, ramo_y - 10, color, 1.8))
+        p.append(flecha(272, ramo_y, 318, ramo_y, color, 1.8))
+        p.append(chip(452, ramo_y, "tu branch", color, tam=12))
+
+        if aldia:
+            p.append(flecha(378, base_y + 20, 348, ramo_y - 20, ACENTO, 2))
+            p.append(chip(505, base_y + 30, "git merge main", ACENTO, tam=12))
+
+        p.append(caja(600, y0 + 46, 412, 120, FONDO, color, radio=9, grosor=1.4))
+        p.append(texto(806, y0 + 74, "Lo que ve el pull request", SUAVE, 13))
+        p.append(teclado(806, y0 + 108, veredicto, color, 15))
+        p.append(texto(806, y0 + 144, pie, color, 14, peso="600"))
+
+    p.append(texto(ancho / 2, 558, "Compruébalo antes de entregar:  git log --oneline tu-branch..upstream/main   ·   si no sale vacío, naciste atrasado", TEXTO, 14, peso="600"))
+    p.append(cierre())
+    return "".join(p)
+
+
+def git_contribucion():
+    """El ciclo de contribucion de codigo abierto, que es el ritual del curso."""
+    ancho, alto = 1080, 560
+    aria = (
+        "El ciclo con el que se contribuye a cualquier proyecto de codigo "
+        "abierto. Arriba, el repositorio del proyecto, donde no tienes permiso "
+        "de escritura. Un fork lo copia a tu cuenta; un clone lo baja a tu "
+        "maquina; ahi creas una branch y commiteas; el push sube esa branch a "
+        "tu fork; y el pull request propone tus commits de vuelta al proyecto, "
+        "cerrando el ciclo. Debajo, los mismos cinco pasos con los nombres que "
+        "usa este curso"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 40, "Así se contribuye a cualquier proyecto de código abierto", TEXTO, 21, peso="600"))
+    p.append(texto(ancho / 2, 66, "y por eso así se entrega en este curso", SUAVE, 14))
+
+    cajas = [
+        (60, 110, 300, 74, ROJO, "EL PROYECTO", "no puedes escribir en él"),
+        (720, 110, 300, 74, AMBAR, "TU FORK", "una copia, en tu cuenta"),
+        (720, 300, 300, 74, CIAN, "TU MÁQUINA", "aquí trabajas, en una branch"),
+    ]
+    for x, y, w, h, color, titulo, glosa in cajas:
+        p.append(caja(x, y, w, h, PANEL, color))
+        p.append(texto(x + w / 2, y + 30, titulo, color, 16, peso="600"))
+        p.append(texto(x + w / 2, y + 54, glosa, SUAVE, 12.5))
+
+    p.append(flecha(366, 136, 714, 136, AMBAR, 2.5))
+    p.append(chip(540, 122, "1 · fork", AMBAR, tam=13))
+    p.append(flecha(870, 190, 870, 294, CIAN, 2.5))
+    p.append(chip(870, 242, "2 · clone", CIAN, tam=13))
+    p.append(texto(870, 404, "3 · branch  +  commits", CIAN, 14, peso="600"))
+    p.append(flecha(714, 337, 366, 337, ACENTO, 2.5))
+    p.append(chip(540, 323, "4 · push a tu fork", ACENTO, tam=13))
+
+    p.append(caja(60, 300, 300, 74, PANEL, ACENTO))
+    p.append(texto(210, 330, "TU BRANCH, YA SUBIDA", ACENTO, 15, peso="600"))
+    p.append(texto(210, 354, "visible en tu fork", SUAVE, 12.5))
+    p.append(flecha(210, 296, 210, 190, VIOLETA, 2.5))
+    p.append(chip(210, 243, "5 · pull request", VIOLETA, tam=13))
+
+    p.append(texto(ancho / 2, 452, "Nadie escribe en el proyecto: se propone, y alguien con permiso decide. Linux, Python y GitHub mismo funcionan así.", TEXTO, 14, peso="600"))
+    p.append(texto(ancho / 2, 480, "En este curso el proyecto es el repositorio de la materia, y lo que propones vive sólo dentro de tu carpeta.", SUAVE, 13.5))
+    p.append(texto(ancho / 2, 516, "Los pasos 1 y 2 son el paso 0 del ritual, una vez en el semestre. Los pasos 3, 4 y 5 son los bloques B y C, en cada entrega.", SUAVE, 13))
+    p.append(cierre())
+    return "".join(p)
+
+
+def git_dos_syncs():
+    """Los dos caminos para sincronizar: quien recibe primero y quien es puente."""
+    ancho, alto = 1080, 520
+    aria = (
+        "Los dos caminos para poner al dia tu copia, lado a lado. Hay tres "
+        "copias de main: la del curso, la de tu fork en el servidor de GitHub y "
+        "la de tu maquina. Por la terminal, el curso baja primero a tu maquina "
+        "con fetch y merge, y de ahi sube a tu fork con push: tu maquina es el "
+        "puente. Por el navegador, el boton Sync fork actualiza primero tu fork "
+        "en el servidor, y de ahi baja a tu maquina con git pull: tu fork es el "
+        "puente. Las dos rutas terminan con las tres copias iguales"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 38, "Hay tres copias de main. Sincronizar es hacer que las tres coincidan", TEXTO, 20, peso="600"))
+    p.append(texto(ancho / 2, 62, "los dos caminos cambian quién recibe primero, y quién hace de puente", SUAVE, 13.5))
+
+    paneles = [
+        (30, ACENTO, "Por la terminal  ·  el bloque A",
+         "tu máquina es el puente", True),
+        (570, VIOLETA, "Por el navegador  ·  el botón",
+         "tu fork es el puente", False),
+    ]
+    for x0, color, titulo, pie, por_terminal in paneles:
+        p.append(caja(x0, 86, 480, 300, PANEL, color))
+        p.append(texto(x0 + 240, 116, titulo, color, 16, peso="600"))
+
+        p.append(caja(x0 + 140, 138, 200, 52, FONDO, ROJO, radio=8, grosor=1.6))
+        p.append(texto(x0 + 240, 160, "EL CURSO", ROJO, 13.5, peso="600"))
+        p.append(texto(x0 + 240, 178, "upstream", SUAVE, 11.5))
+
+        p.append(caja(x0 + 26, 276, 170, 52, FONDO, AMBAR, radio=8, grosor=1.6))
+        p.append(texto(x0 + 111, 298, "TU FORK", AMBAR, 13.5, peso="600"))
+        p.append(texto(x0 + 111, 316, "en GitHub", SUAVE, 11.5))
+
+        p.append(caja(x0 + 284, 276, 170, 52, FONDO, CIAN, radio=8, grosor=1.6))
+        p.append(texto(x0 + 369, 298, "TU MÁQUINA", CIAN, 13.5, peso="600"))
+        p.append(texto(x0 + 369, 316, "el disco", SUAVE, 11.5))
+
+        if por_terminal:
+            p.append(flecha(x0 + 296, 194, x0 + 356, 270, color, 2.2))
+            p.append(chip(x0 + 372, 228, "1 · fetch + merge", color, tam=11))
+            p.append(flecha(x0 + 278, 350, x0 + 202, 350, color, 2.2))
+            p.append(chip(x0 + 240, 368, "2 · push origin main", color, tam=11))
+        else:
+            p.append(flecha(x0 + 184, 194, x0 + 124, 270, color, 2.2))
+            p.append(chip(x0 + 116, 228, "1 · botón Sync fork", color, tam=11))
+            p.append(flecha(x0 + 202, 350, x0 + 278, 350, color, 2.2))
+            p.append(chip(x0 + 240, 368, "2 · pull origin main", color, tam=11))
+
+    p.append(texto(285, 412, "Úsalo siempre. Es el bloque A.", ACENTO, 13, peso="600"))
+    p.append(texto(810, 412, "Sólo si aún no clonaste, o tu copia está rota.", VIOLETA, 13, peso="600"))
+    p.append(texto(ancho / 2, 456, "No los mezcles: si aprietas el botón teniendo commits propios en tu main local, el git pull te crea un merge y tu main empieza a divergir.", TEXTO, 13.5, peso="600"))
+    p.append(texto(ancho / 2, 484, "Las dos rutas acaban igual: las tres copias de main, idénticas.", SUAVE, 13))
+    p.append(cierre())
+    return "".join(p)
+
+
 DIAGRAMAS = {
     "git-llaves": git_llaves,
     "git-flujo": git_flujo,
@@ -861,8 +1075,12 @@ DIAGRAMAS = {
     "git-lo-que-no-se-sube": git_lo_que_no_se_sube,
     "git-deshacer": git_deshacer,
     "git-branches": git_branches,
+    "git-branch-disco": git_branch_disco,
+    "git-branch-atrasada": git_branch_atrasada,
     "git-conflicto": git_conflicto,
     "git-tres-repos": git_tres_repos,
+    "git-contribucion": git_contribucion,
+    "git-dos-syncs": git_dos_syncs,
     "git-race": git_race,
     "git-el-mirror": git_el_mirror,
     "git-el-ritual": git_el_ritual,

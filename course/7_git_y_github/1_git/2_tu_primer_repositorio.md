@@ -111,10 +111,10 @@ git log --oneline
 
 En la salida aparece `HEAD -> main`. Dos palabras que vale la pena fijar ahora:
 
-- **`main`** es el nombre de la línea de trabajo en la que estás. En la página 8 vas a crear otras.
+- **`main`** es el nombre de la línea de trabajo en la que estás. En [[branches-y-merge|la página 6]] vas a crear otras.
 - **`HEAD`** es el señalador de "aquí estoy parado". Casi siempre apunta a la punta de la línea actual.
 
-También se escribe **`HEAD~1`**, que significa "un commit antes de donde estoy", `HEAD~2` dos antes, y así. Lo vas a necesitar en la página 7.
+También se escribe **`HEAD~1`**, que significa "un commit antes de donde estoy", `HEAD~2` dos antes, y así. Lo vas a necesitar en [[deshacer-en-git|la página 5]].
 
 ## Paso 5: por qué existe el staging area
 

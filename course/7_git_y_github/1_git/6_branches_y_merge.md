@@ -28,6 +28,10 @@ Meta: provocarte un conflicto a propósito y resolverlo, para que el día que ll
 
 ## Qué es realmente una branch
 
+En español una branch es una **rama**, y vas a ver las dos palabras en estas páginas y en cualquier tutorial. Aquí decimos *branch* casi siempre, porque es lo que dice el comando que vas a teclear.
+
+En español una branch es una **rama**, y vas a ver las dos palabras en estas páginas y en cualquier tutorial. Aquí decimos *branch* casi siempre, porque es lo que dice el comando que vas a teclear.
+
 **Haz:**
 
 ```bash
@@ -121,10 +125,14 @@ Aquí está la parte que importa. Vas a crear el choque a propósito, en tu labo
 **Haz:** primero una rama que cambia una línea.
 
 ```bash
-printf 'saludo = "hola"\nmensaje = "buenos días"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "hola"\n'  > texto.txt
+printf 'mensaje = "buenos días"\n' >> texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git add texto.txt && git commit -m "agrego el texto base"
 git switch -c version-formal
-printf 'saludo = "hola"\nmensaje = "buenas tardes, estimado"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "hola"\n'  > texto.txt
+printf 'mensaje = "buenas tardes, estimado"\n' >> texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git commit -am "uso un tono formal"
 ```
 
@@ -132,7 +140,8 @@ git commit -am "uso un tono formal"
 
 ```bash
 git switch main
-printf 'saludo = "hola"\nmensaje = "qué tal"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "hola"\nmensaje = "qué tal"\n' > texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git commit -am "uso un tono casual"
 git merge version-formal
 ```
@@ -142,7 +151,8 @@ git merge version-formal
 ```text
 Auto-merging texto.txt
 CONFLICT (content): Merge conflict in texto.txt
-Automatic merge failed; fix conflicts and then commit the result.
+Automatic merge failed; fix conflicts and then
+commit the result.
 ```
 
 **Eso es un éxito.** Provocaste exactamente lo que querías.
@@ -183,10 +193,14 @@ Fíjate en lo que Git **sí** resolvió solo: las líneas de saludo y despedida 
 
 Resolver significa dejar el archivo como lo quieres, **sin marcadores**. Puede quedarse una mitad, la otra, o algo nuevo que escribas tú.
 
+En un archivo de verdad esto se hace **abriéndolo en un editor** —`nano texto.txt`— y borrando a mano las tres líneas marcadoras. Aquí se reescribe entero con `printf` sólo porque son tres líneas y así el laboratorio es reproducible.
+
 **Haz:**
 
 ```bash
-printf 'saludo = "hola"\nmensaje = "buenas tardes"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "hola"\n'  > texto.txt
+printf 'mensaje = "buenas tardes"\n' >> texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git add texto.txt
 git status
 git commit -m "resuelvo el conflicto del mensaje"
@@ -195,6 +209,35 @@ git log --oneline
 
 **Deberías ver** que después del `add` el estado cambia a `All conflicts fixed but you are still merging`, y que el commit final aparece en el log.
 
+Antes de commitear conviene comprobar que no quedó ningún marcador. En vez de buscarlos con la vista, que se cuenten solos:
+
+```bash
+grep -c '^[<=>]\{7\}' texto.txt
+```
+
+Qué hace, pieza por pieza:
+
+```text
+grep -c '^[<=>]\{7\}' texto.txt
+     │    ││    │
+     │    ││    └── ...siete veces seguidas
+     │    │└─────── uno de estos tres caracteres...
+     │    └──────── al principio de la línea...
+     └───────────── -c: no me las muestres, cuéntalas
+```
+
+Es decir: **cuenta las líneas que empiezan con `<<<<<<<`, `=======` o `>>>>>>>`**.
+
+| Si dice | Qué significa | Qué haces |
+|---|---|---|
+| `0` | No queda ningún marcador | Commitea |
+| cualquier otro número | Todavía hay marcadores dentro | Vuelve al archivo |
+
+Cada conflicto mete tres líneas, así que con dos conflictos en el mismo archivo el resultado es `6`. Por eso la regla es «cero», no «menos de tres». Y un falso positivo honesto: en Markdown, una línea de `=======` bajo un título es un subrayado legítimo y también cuenta. Si el número no baja a cero y no ves marcadores, mira si es eso.
+
+> [!WARNING]
+> **Si dejas un marcador, Git lo commitea sin decirte nada.** No hay advertencia ni error: el `<<<<<<< HEAD` se queda dentro de tu archivo, y lo descubres semanas después cuando el código no corre. Por eso se comprueba y no se confía.
+
 Ahí `git add` significa algo distinto de lo habitual: es cómo le dices a Git **"ya lo revisé, esta versión es la buena"**. Por eso el conflicto se cierra con el mismo comando que usas para todo lo demás.
 
 Este merge sí creó un commit nuevo, con **dos padres**, porque las dos líneas habían avanzado por separado. Y Git te abrió un editor para el mensaje, o lo habría hecho si no le hubieras pasado `-m`.
@@ -202,16 +245,48 @@ Este merge sí creó un commit nuevo, con **dos padres**, porque las dos líneas
 > [!TIP]
 > Si el editor que se abre es `vim` y no sabes salir: escribe `:wq` y presiona Enter. Para evitarlo de una vez, `git config --global core.editor nano` deja uno más simple, donde se guarda con `Ctrl+O` y se sale con `Ctrl+X`.
 
+::: problem {#git-p9-marcadores title="Commiteé con los marcadores dentro"}
+Un compañero resuelve su conflicto con prisa. Borra dos de las tres líneas marcadoras, deja el archivo como quiere, y hace `git add` y `git commit`.
+
+Git no le dice nada. El commit se crea, `git status` queda limpio, y él sigue con su vida. Dos semanas después su script no corre y el error apunta a una línea que dice `>>>>>>> practica-a`.
+
+¿Por qué Git no le avisó, y qué debió haber hecho?
+:::
+
+::: hint {of="git-p9-marcadores"}
+Piensa qué significa exactamente `git add` durante un merge, y qué es lo que Git sabe comprobar y qué no.
+:::
+
+::: answer {of="git-p9-marcadores"}
+Git **no lee el contenido de tus archivos**. Los marcadores no son sintaxis de Git: son texto que Git escribió dentro del archivo para que tú decidieras. Una vez escritos, para Git son caracteres como cualquier otro.
+
+Y `git add`, durante un merge, significa una sola cosa: **"ya lo revisé, esta versión es la buena"**. Es una afirmación tuya, no una comprobación suya. Cuando le dices eso, Git te cree. Por eso el commit se crea sin una advertencia, sin un warning, sin nada.
+
+Ésa es la única parte de todo el flujo donde Git no te protege. En todo lo demás —un push atrasado, una branch sin mergear, un switch con trabajo sin guardar— hay un mensaje que te detiene. Aquí no.
+
+Debió haber corrido la comprobación de arriba antes del `add`:
+
+```bash
+grep -c '^[<=>]\{7\}' <archivo>   # tiene que decir 0
+```
+
+Y para arreglarlo ahora: editar el archivo, borrar lo que quedó, y commitear la corrección. El commit viejo se queda en la historia con la basura dentro, que es el costo de no haber mirado.
+:::
+
 ## La salida de emergencia
 
 **Haz:** provoca otro conflicto y esta vez no lo resuelvas.
 
 ```bash
 git switch -c otra-version
-printf 'saludo = "qué onda"\nmensaje = "buenas tardes"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "qué onda"\n'  > texto.txt
+printf 'mensaje = "buenas tardes"\n' >> texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git commit -am "cambio el saludo"
 git switch main
-printf 'saludo = "buenos días"\nmensaje = "buenas tardes"\ndespedida = "adiós"\n' > texto.txt
+printf 'saludo = "buenos días"\n'  > texto.txt
+printf 'mensaje = "buenas tardes"\n' >> texto.txt
+printf 'despedida = "adiós"\n' >> texto.txt
 git commit -am "cambio el saludo de otra forma"
 git merge otra-version
 git merge --abort

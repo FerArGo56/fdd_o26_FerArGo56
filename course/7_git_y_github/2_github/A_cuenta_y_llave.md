@@ -6,12 +6,12 @@ summary: "Crea tu cuenta de GitHub, genera un par de llaves SSH y déjalo config
 status: ready
 estimated_time: 25m
 tags: [github, ssh, ssh-keygen, ssh-agent, llaves]
-prerequisites: [seccion-github]
+prerequisites: [git-y-github]
 ---
 
 # Cuenta y llave
 
-**GitHub · página 1 de 6** · 25 min
+**GitHub · apéndice** · 25 min · *trabajo previo a clase*
 
 Meta: que `ssh -T` te salude por tu nombre de usuario.
 
@@ -86,7 +86,9 @@ En **macOS**, agrega además `UseKeychain yes` debajo de esas líneas: guarda la
 En **WSL2**, el agente no sigue vivo al cerrar la terminal. Si te vuelve a pedir la frase cada vez que abres una ventana nueva, agrega esto al final de `~/.bashrc`:
 
 ```bash
-if [ -z "$SSH_AUTH_SOCK" ]; then eval "$(ssh-agent -s)" >/dev/null; fi
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  eval "$(ssh-agent -s)" >/dev/null
+fi
 ```
 
 En **Ubuntu de escritorio** normalmente no hace falta nada: el escritorio ya trae un agente corriendo.
@@ -115,7 +117,8 @@ ssh -T git@github.com
 La primera vez te pregunta si confías en el servidor: escribe `yes`. Después:
 
 ```text
-Hi tu-usuario! You've successfully authenticated, but GitHub does not provide shell access.
+Hi tu-usuario! You've successfully authenticated, but
+GitHub does not provide shell access.
 ```
 
 **Eso es un éxito, no un error.** Dice literalmente «no te doy acceso a una shell» porque GitHub no es un servidor donde te conectes a trabajar: la llave sirve para que `git` hable con GitHub, nada más. Si aparece tu nombre de usuario, terminaste.

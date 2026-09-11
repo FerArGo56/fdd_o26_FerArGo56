@@ -19,9 +19,9 @@ Lo que yo publico en `codigo/07_git/` tú lo copias a
 
 ```bash
 cd ~/fdd/fdd_o26
-U=$(gh api user --jq .login) && echo "$U"
-mkdir -p estudiantes/$U/07_git
-cp -r codigo/07_git/. estudiantes/$U/07_git/
+echo "$GHUSER"   # tu login, del perfil de tu shell
+mkdir -p estudiantes/$GHUSER/07_git
+cp -r codigo/07_git/. estudiantes/$GHUSER/07_git/
 ```
 
 Fíjate en la barra y el punto al final del origen. Sin ellos, `cp` copia la

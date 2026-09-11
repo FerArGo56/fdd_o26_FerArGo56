@@ -22,7 +22,7 @@ Meta: poder predecir, antes de correr `git merge`, si va a salir solo o va a hab
 - Tocar el mismo archivo no basta para que haya conflicto. Tocar la misma **zona**, sí.
 - Hay tres conflictos que no son de contenido y confunden la primera vez.
 
-Todo esto pasa **dentro de tu máquina**, entre dos branches. Nadie más tiene que estar involucrado. Lo que ocurre cuando además hay otra persona con su propia copia lo verás en [[dos-personas-un-archivo|Dos personas, un archivo]], ya en la sección de GitHub.
+Todo esto pasa **dentro de tu máquina**, entre dos branches. Nadie más tiene que estar involucrado. Lo que ocurre cuando además hay otra persona con su propia copia lo verás en [[el-flujo-del-curso|La zona roja y tu espejo]], ya en la sección de GitHub.
 
 ## El mecanismo: tres vías, no dos
 

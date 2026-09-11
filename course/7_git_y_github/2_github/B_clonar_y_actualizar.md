@@ -1,7 +1,7 @@
 ---
 id: clonar-y-actualizar
 title: "Clonar y mantener al día"
-nav_title: "Clonar y actualizar"
+nav_title: "Clonar el repo"
 summary: "Clona el repositorio del curso, configura tu identidad en git y compruébate que puedes traer lo nuevo con git pull."
 status: ready
 estimated_time: 20m
@@ -11,7 +11,7 @@ prerequisites: [cuenta-y-llave]
 
 # Clonar y mantener al día
 
-**GitHub · página 2 de 6** · 20 min
+**GitHub · apéndice** · 20 min · *trabajo previo a clase*
 
 Meta: tener el repositorio del curso en tu disco y poder traer lo nuevo con un comando.
 
@@ -39,7 +39,7 @@ git config --global pull.rebase false
 git config --global --list
 ```
 
-**Deberías ver** las cuatro líneas que acabas de poner. `--global` significa «para todos los repositorios de esta computadora»: se hace una vez en la vida de la máquina.
+**Deberías ver**, entre lo que imprima, las cuatro líneas que acabas de poner. `git config --global --list` lista **toda** la configuración global de la máquina, así que si ya habías configurado algo antes van a salir más. `--global` significa «para todos los repositorios de esta computadora»: se hace una vez en la vida de la máquina.
 
 ## Paso 2: clona el repositorio
 
@@ -96,7 +96,7 @@ Tu llave privada **no se respalda y no se recupera**. Vive en `~/.ssh/` y si bor
 
 | Situación | Qué haces |
 |---|---|
-| Formateaste, o estrenas computadora | Repites la [[cuenta-y-llave|hoja 1]]: generas un par nuevo y lo agregas a la misma cuenta. Toma dos minutos. |
+| Formateaste, o estrenas computadora | Repites [[cuenta-y-llave|la hoja de la llave]]: generas un par nuevo y lo agregas a la misma cuenta. Toma dos minutos. |
 | Trabajas en dos máquinas | Una llave **por máquina**, las dos en la misma cuenta. Nunca copies la privada de una a otra. |
 | Perdiste una laptop | Entra a GitHub y borra esa llave de Settings. Lo que estaba en `main` sigue en GitHub, intacto. |
 
@@ -127,4 +127,4 @@ Con esto termina el setup. Si `ssh -T` te saluda por tu nombre de usuario y `git
 
 Con esto termina el setup de GitHub.
 
-Si todavía no has hecho la sección de [[seccion-git|Git]], ése es el siguiente paso y no necesita nada de lo que acabas de configurar. Si ya la hiciste, sigue con [[git-no-es-github|Git no es GitHub]], donde se conectan las dos mitades.
+Si todavía no has hecho la sección de [[seccion-git|Git]], ése es el siguiente paso y no necesita nada de lo que acabas de configurar. Si ya la hiciste, sigue con [[github-en-corto|GitHub, en corto]], donde se conectan las dos mitades.

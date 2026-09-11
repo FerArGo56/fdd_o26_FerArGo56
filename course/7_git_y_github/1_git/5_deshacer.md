@@ -189,7 +189,7 @@ Dos límites que conviene saber:
 
 Mientras trabajes solo en una rama que nadie más usa, reescribir no tiene consecuencias. En el momento en que algo se comparte, cambia todo: reescribir lo que otros ya tienen les rompe su copia.
 
-Como en esta clase todavía no has compartido nada, ninguno de estos comandos te puede meter en problemas. La conversación sobre historia compartida, y sobre por qué `push --force` tiene tan mala fama, llega en [[git-no-es-github|Git no es GitHub]].
+Como en esta clase todavía no has compartido nada, ninguno de estos comandos te puede meter en problemas. La conversación sobre historia compartida, y sobre por qué `push --force` tiene tan mala fama, llega en [[el-fork|El fork y tus dos remotes]].
 
 ::: problem {#git-p7-reset title="Se me fue un commit con reset --hard"}
 Trabajaste toda la tarde, hiciste un commit, y después corriste `git reset --hard HEAD~1` por equivocación. `git log` ya no lo muestra.

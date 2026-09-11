@@ -90,7 +90,7 @@ git status --short
 
 ```bash
 git add .gitignore
-git commit -m "ignoro la basura del sistema y las credenciales"
+git commit -m "ignoro la basura y las credenciales"
 ```
 
 Sobre los patrones: son **globs**, no expresiones regulares. `*` significa cualquier cosa dentro de un nombre, `datos/` con barra final significa una carpeta, y una línea que empieza con `!` es una excepción.
