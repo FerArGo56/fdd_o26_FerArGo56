@@ -2,16 +2,16 @@
 id: python
 title: "Python"
 nav_title: "Python"
-summary: "Python para trabajar con datos de forma profesional, en dos secciones: los ambientes con uv, y lo que hace Python por dentro cuando corre tu código."
+summary: "Python para trabajar con datos de forma profesional, en tres secciones: los ambientes con uv, lo que hace Python por dentro cuando corre tu código, y cómo elegir el stack midiendo."
 status: ready
-estimated_time: 210m
-tags: [python, uv, ambientes, venv, pip]
+estimated_time: 300m
+tags: [python, uv, ambientes, venv, pip, polars, duckdb, pydantic]
 prerequisites: [contenedores]
 ---
 
 # Python
 
-**Dos secciones** · 18 páginas · unos 210 min
+**Tres secciones** · 24 páginas · unos 300 min
 
 ## En corto
 
@@ -25,6 +25,7 @@ prerequisites: [contenedores]
 |---:|---|---|---|---:|---:|
 | 1 | [[ambientes-python]] | Dónde viven tus paquetes, y cómo hacer que tu proyecto corra igual en otra máquina | jueves 1 de octubre, 19:00–20:00 | 12 | 120 |
 | 2 | [[python-por-dentro]] | Qué hace Python cuando corre tu código, para pedirle bien a la IA y revisar lo que te entrega | martes 6 de octubre, 19:00–20:30 | 6 | 90 |
+| 3 | [[elegir-el-stack]] | Qué librerías y formatos usar para datos en 2026, decidido midiendo y no por lo que la IA vio más | jueves 8 de octubre, 19:00–20:30 | 6 | 90 |
 
 ## Antes de empezar
 

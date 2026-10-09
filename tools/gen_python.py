@@ -1,4 +1,4 @@
-"""Genera los diagramas SVG de la unidad 9 (Python): 9.1 ambientes y 9.2 Python por dentro.
+"""Genera los diagramas SVG de la unidad 9 (Python): 9.1 ambientes, 9.2 Python por dentro y 9.3 Elegir el stack.
 
 Las primitivas y la paleta salen de tools/svg_base.py: un solo lugar declara
 los colores de skins/fdd-eva.yaml.
@@ -643,6 +643,266 @@ def py_import():
     p.append(cierre())
     return "".join(p)
 
+
+# --- 9.3 Elegir el stack -------------------------------------------------
+
+
+def _tablita(x, y, cols, filas, color, celda=10, hueco=3):
+    """Una tabla en miniatura: cols x filas celdas, para mostrar cuanto se materializa."""
+    return "".join(
+        f'<rect x="{x + c * (celda + hueco)}" y="{y + f * (celda + hueco)}" '
+        f'width="{celda}" height="{celda}" rx="2" fill="{color}" fill-opacity="0.55"/>'
+        for f in range(filas) for c in range(cols)
+    )
+
+
+def py_stack_mapa():
+    """Las cuatro capas del stack y lo viejo que escribe la IA en cada una."""
+    ancho, alto = 1080, 420
+    aria = (
+        "Cuatro capas en fila unidas por flechas. Proyecto: uv, ruff y pytest, "
+        "como se instala y se revisa. Contratos: tipos y Pydantic, quien revisa "
+        "cada dato. Motor: Polars y DuckDB, donde se hace el trabajo. Formato: "
+        "Parquet, como se guarda. Debajo de cada capa, en gris, lo viejo que "
+        "suele escribir la IA en su lugar: pip y requirements.txt; sin tipos o "
+        "Pydantic v1; pandas para todo; CSV o pickle"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 44, "El stack en cuatro capas", TEXTO, 21, peso="600"))
+    capas = (
+        ("proyecto", "uv · ruff · pytest", "cómo se instala y se revisa", AMBAR,
+         ("pip", "requirements.txt")),
+        ("contratos", "tipos · Pydantic", "quién revisa cada dato", CIAN,
+         ("sin tipos", "Pydantic v1")),
+        ("motor", "Polars · DuckDB", "dónde se hace el trabajo", ACENTO,
+         ("pandas para todo", "")),
+        ("formato", "Parquet", "cómo se guarda", VIOLETA,
+         ("CSV", "pickle")),
+    )
+    w, hueco = 220, 40
+    for i, (capa, piezas, que, color, viejo) in enumerate(capas):
+        x = 40 + i * (w + hueco)
+        p.append(caja(x, 90, w, 140, PANEL, color))
+        p.append(texto(x + w / 2, 122, capa, color, 16, peso="600"))
+        p.append(teclado(x + w / 2, 166, piezas, color, 16))
+        p.append(texto(x + w / 2, 206, que, SUAVE, 13))
+        if i < len(capas) - 1:
+            p.append(flecha(x + w + 4, 160, x + w + hueco - 4, 160, LINEA, 2.2))
+        p.append(_punteada(x + 20, 296, w - 40, 70))
+        for k, s in enumerate(v for v in viejo if v):
+            dy = 336 if not viejo[1] else 324 + k * 24
+            p.append(teclado(x + w / 2, dy, s, SUAVE, 13.5, peso="normal"))
+    p.append(texto(40, 280, "lo viejo que suele escribir la IA en cada capa:", SUAVE, 13.5, anclaje="start"))
+    p.append(texto(ancho / 2, 400, "Cada capa se elige midiendo, no por costumbre.", SUAVE, 13.5))
+    p.append(cierre())
+    return "".join(p)
+
+
+def py_stack_frontera():
+    """Valida en la frontera, confia adentro."""
+    ancho, alto = 1080, 460
+    aria = (
+        "Cuatro zonas de izquierda a derecha. Afuera: un CSV, una API y un "
+        "formulario, datos en los que no confias. Una flecha entra a la "
+        "frontera, donde Pydantic valida cada dato. Las filas validas pasan "
+        "adentro, donde una dataclass o un TypedDict las lleva sin revisarlas "
+        "de nuevo, y de ahi a tu codigo, que confia. Debajo de la frontera, una "
+        "fila sucia con precio igual a abc sale rechazada con ValidationError "
+        "y nunca entra"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 44, "Valida en la frontera, confía adentro", TEXTO, 21, peso="600"))
+    # Afuera.
+    p.append(texto(140, 92, "afuera: no confías", SUAVE, 14, peso="600"))
+    for k, fuente in enumerate(("CSV", "API", "formulario")):
+        y = 112 + k * 62
+        p.append(caja(50, y, 180, 46, PANEL, LINEA, radio=8))
+        p.append(teclado(140, y + 29, fuente, TEXTO, 15))
+    p.append(flecha(234, 205, 300, 205, SUAVE, 2.2))
+    # Frontera.
+    p.append(caja(304, 100, 200, 210, TINTE, CIAN, grosor=2.5))
+    p.append(texto(404, 92, "la frontera", CIAN, 14, peso="600"))
+    p.append(teclado(404, 196, "Pydantic", CIAN, 18))
+    p.append(texto(404, 222, "valida cada dato", TEXTO, 14))
+    p.append(texto(404, 244, "una vez", SUAVE, 13))
+    p.append(flecha(508, 205, 576, 205, ACENTO, 2.2))
+    p.append(texto(542, 190, "válida", ACENTO, 12.5))
+    # Adentro.
+    p.append(texto(690, 92, "adentro: confías", ACENTO, 14, peso="600"))
+    p.append(caja(580, 100, 220, 210, PANEL, ACENTO))
+    p.append(teclado(690, 186, "dataclass", ACENTO, 17))
+    p.append(teclado(690, 212, "TypedDict", ACENTO, 17))
+    p.append(texto(690, 244, "no revisa de nuevo", SUAVE, 13))
+    p.append(flecha(804, 205, 856, 205, ACENTO, 2.2))
+    p.append(caja(860, 170, 180, 70, PANEL, LINEA))
+    p.append(texto(950, 211, "tu código", TEXTO, 16, peso="600"))
+    # Fila sucia.
+    p.append(flecha(404, 314, 404, 362, ROJO, 2.2))
+    p.append(caja(294, 366, 220, 46, FONDO, ROJO, radio=8))
+    p.append(teclado(404, 395, "ValidationError", ROJO, 16))
+    p.append(teclado(540, 386, 'precio = "abc"', ROJO, 14, anclaje="start", peso="normal"))
+    p.append(texto(540, 408, "la fila sucia se rechaza aquí y nunca entra", SUAVE, 13, anclaje="start"))
+    p.append(cierre())
+    return "".join(p)
+
+
+def py_stack_lazy():
+    """Eager materializa cada paso; lazy arma un plan y empuja filtro y columnas a la lectura."""
+    ancho, alto = 1080, 540
+    aria = (
+        "Dos columnas. Eager, a la izquierda: cuatro pasos en orden, leer todo "
+        "con 5 columnas y N filas, filtrar cantidad mayor que 0, seleccionar 3 "
+        "columnas y agrupar por tienda; junto a cada paso, la tabla que "
+        "materializa en memoria, de mas grande a mas chica. Lazy, a la derecha: "
+        "un plan donde nada corre todavia; el filtro y la seleccion de 3 "
+        "columnas bajan a la lectura, pushdown, que lee solo esas columnas y "
+        "esas filas; luego agrupar por tienda, y collect corre el plan una sola "
+        "vez"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 44, "Eager hace cada paso; lazy arma un plan", TEXTO, 21, peso="600"))
+    p.append(f'<line x1="540" y1="70" x2="540" y2="470" stroke="{LINEA}" stroke-width="1.5" stroke-dasharray="6 6"/>')
+    p.append(texto(280, 84, "eager", AMBAR, 16, peso="600"))
+    p.append(texto(800, 84, "lazy", ACENTO, 16, peso="600"))
+
+    pasos = (
+        ("1 · leer todo: 5 columnas, N filas", 5, 4),
+        ("2 · filtrar cantidad > 0", 5, 3),
+        ("3 · seleccionar 3 columnas", 3, 3),
+        ("4 · agrupar por tienda", 2, 1),
+    )
+    for i, (paso, cols, filas) in enumerate(pasos):
+        y = 104 + i * 82
+        p.append(caja(40, y, 480, 64, PANEL, AMBAR if i == 0 else LINEA))
+        p.append(texto(60, y + 38, paso, TEXTO, 14.5, anclaje="start"))
+        p.append(_tablita(430, y + 32 - (filas * 13 - 3) / 2, cols, filas, AMBAR))
+        if i < len(pasos) - 1:
+            p.append(flecha(280, y + 66, 280, y + 80, LINEA, 1.5))
+    p.append(texto(280, 452, "cada paso crea una tabla entera en memoria", AMBAR, 14))
+
+    # Lazy: el plan.
+    p.append(_punteada(560, 96, 480, 280))
+    p.append(texto(580, 120, "un plan: nada corre todavía", SUAVE, 13, anclaje="start"))
+    p.append(caja(580, 134, 440, 64, PANEL, ACENTO))
+    p.append(texto(600, 160, "leer sólo 3 columnas", TEXTO, 14.5, anclaje="start"))
+    p.append(texto(600, 182, "y sólo las filas con cantidad > 0", TEXTO, 14.5, anclaje="start"))
+    p.append(_tablita(950, 166 - (2 * 13 - 3) / 2, 3, 2, ACENTO))
+    for x, s in ((700, "filtrar"), (870, "seleccionar")):
+        p.append(_punteada(x, 246, 140, 40))
+        p.append(texto(x + 70, 271, s, SUAVE, 13.5))
+        p.append(flecha(x + 70, 244, x + 70, 202, ACENTO, 2))
+    p.append(texto(855, 228, "pushdown", ACENTO, 13, peso="600"))
+    p.append(flecha(620, 202, 620, 306, LINEA, 1.8))
+    p.append(caja(580, 310, 440, 50, PANEL, LINEA))
+    p.append(texto(600, 340, "agrupar por tienda", TEXTO, 14.5, anclaje="start"))
+    p.append(_tablita(964, 330, 2, 1, ACENTO))
+    p.append(flecha(800, 380, 800, 400, ACENTO, 2))
+    p.append(caja(620, 404, 360, 50, TINTE, ACENTO, radio=8))
+    p.append(teclado(800, 435, "collect(): corre una vez", ACENTO, 15))
+    p.append(texto(ancho / 2, 506, "El motor ve el plan entero y lee menos: menos memoria y menos tiempo.", SUAVE, 14))
+    p.append(cierre())
+    return "".join(p)
+
+
+def _columnas(x, y, w, h, color, nombres=("tienda", "cantidad", "precio")):
+    """Un bloque de memoria guardado por columnas: una franja por columna."""
+    p = [caja(x, y, w, h, PANEL, color)]
+    franja = (w - 20 - 8 * (len(nombres) - 1)) / len(nombres)
+    for k, n in enumerate(nombres):
+        fx = x + 10 + k * (franja + 8)
+        p.append(f'<rect x="{fx}" y="{y + 30}" width="{franja}" height="{h - 40}" rx="4" '
+                 f'fill="{color}" fill-opacity="0.3" stroke="{color}" stroke-width="1.2"/>')
+        p.append(texto(fx + franja / 2, y + 22, n, SUAVE, 11.5))
+    return "".join(p)
+
+
+def py_stack_arrow():
+    """Compartir la memoria en columnas (Arrow) contra copiarla con to_pandas()."""
+    ancho, alto = 1080, 440
+    aria = (
+        "Dos paneles. Compartir: Polars y DuckDB apuntan con una flecha cada "
+        "uno al mismo bloque de memoria guardado por columnas, tienda, cantidad "
+        "y precio, en formato Arrow; hay una sola copia. Copiar: un DataFrame "
+        "de Polars pasa por to_pandas y aparece un segundo bloque, el DataFrame "
+        "de pandas, con arreglos de NumPy por dentro; los datos quedan dos "
+        "veces en memoria, y el camino de pandas de regreso tambien convierte"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 44, "Compartir la memoria o copiarla", TEXTO, 21, peso="600"))
+    p.append(f'<line x1="540" y1="66" x2="540" y2="380" stroke="{LINEA}" stroke-width="1.5" stroke-dasharray="6 6"/>')
+    p.append(texto(280, 84, "compartir", ACENTO, 16, peso="600"))
+    p.append(texto(810, 84, "copiar", ROJO, 16, peso="600"))
+
+    for cx, nombre in ((170, "Polars"), (390, "DuckDB")):
+        p.append(caja(cx - 70, 104, 140, 42, PANEL, CIAN, radio=8))
+        p.append(teclado(cx, 131, nombre, CIAN, 15))
+        p.append(flecha(cx, 150, 280 + (cx - 280) * 0.6, 206, CIAN, 2))
+    p.append(_columnas(90, 210, 380, 120, ACENTO))
+    p.append(texto(280, 356, "memoria en columnas (Arrow): una sola copia", ACENTO, 14))
+
+    p.append(texto(650, 150, "Polars", CIAN, 14, peso="600"))
+    p.append(_columnas(570, 160, 160, 170, CIAN))
+    p.append(flecha(736, 230, 864, 230, ROJO, 2.2))
+    p.append(chip(800, 204, "to_pandas()", ROJO, ancho=116, tam=12))
+    p.append(flecha(864, 270, 736, 270, ROJO, 2.2))
+    p.append(chip(800, 296, "pl.from_pandas()", ROJO, ancho=124, tam=11))
+    p.append(texto(950, 132, "pandas", ROJO, 14, peso="600"))
+    p.append(texto(950, 150, "NumPy por dentro", SUAVE, 12))
+    p.append(_columnas(870, 160, 160, 170, ROJO))
+    p.append(texto(800, 356, "cada paso convierte: los datos, dos veces en memoria", ROJO, 14))
+    p.append(texto(ancho / 2, 414, "Arrow es un formato de columnas en memoria: Polars y DuckDB lo leen sin convertir; pandas no.", SUAVE, 13.5))
+    p.append(cierre())
+    return "".join(p)
+
+
+def py_stack_generador():
+    """Lista: todo en memoria a la vez. Generador: uno a la vez con yield."""
+    ancho, alto = 1080, 450
+    aria = (
+        "Dos paneles con la memoria como una barra vertical sobre la misma "
+        "linea base. Lista: los doce elementos del archivo se apilan en la "
+        "barra, que queda alta, y despues van a sum; la memoria crece con el "
+        "archivo. Generador: los elementos siguen en el archivo, yield entrega "
+        "uno, la barra tiene un solo elemento y ese va a sum; la memoria queda "
+        "fija"
+    )
+    p = [marco(ancho, alto, aria)]
+    p.append(texto(ancho / 2, 44, "Todo a la vez o uno a la vez", TEXTO, 21, peso="600"))
+    p.append(f'<line x1="540" y1="66" x2="540" y2="430" stroke="{LINEA}" stroke-width="1.5" stroke-dasharray="6 6"/>')
+    p.append(texto(280, 84, "lista", AMBAR, 16, peso="600"))
+    p.append(texto(810, 84, "generador", ACENTO, 16, peso="600"))
+    p.append(teclado(280, 112, "[float(p) for p in precios]", AMBAR, 14, peso="normal"))
+    p.append(teclado(810, 112, "yield float(p)", ACENTO, 14, peso="normal"))
+
+    base = 380
+    for x0 in (40, 570):
+        p.append(f'<line x1="{x0 + 40}" y1="{base + 2}" x2="{x0 + 430}" y2="{base + 2}" stroke="{SUAVE}" stroke-width="1.5"/>')
+        p.append(texto(x0 + 430, base + 20, "memoria", SUAVE, 12, anclaje="end"))
+    # Lista: doce celdas apiladas.
+    for k in range(12):
+        p.append(caja(160, base - 20 * (k + 1), 120, 18, AMBAR, AMBAR, radio=3, grosor=1))
+    p.append(flecha(284, 360, 356, 360, AMBAR, 2.2))
+    p.append(caja(360, 340, 130, 40, PANEL, AMBAR, radio=8))
+    p.append(teclado(425, 366, "sum()", AMBAR, 15))
+    p.append(texto(90, 230, "12 de 12", AMBAR, 13.5, anclaje="start"))
+    p.append(texto(90, 248, "a la vez", AMBAR, 13.5, anclaje="start"))
+    p.append(texto(280, 414, "la memoria crece con el archivo", AMBAR, 14))
+    # Generador: pendientes punteados, yield, una celda.
+    for k in range(6):
+        p.append(f'<rect x="700" y="{150 + k * 20}" width="120" height="18" rx="3" fill="none" '
+                 f'stroke="{SUAVE}" stroke-width="1.2" stroke-dasharray="4 3"/>')
+    p.append(texto(690, 196, "aún en", SUAVE, 13, anclaje="end"))
+    p.append(texto(690, 214, "el archivo", SUAVE, 13, anclaje="end"))
+    p.append(flecha(760, 274, 760, 356, ACENTO, 2.2))
+    p.append(chip(760, 316, "yield", ACENTO, tam=13))
+    p.append(caja(700, base - 20, 120, 18, ACENTO, ACENTO, radio=3, grosor=1))
+    p.append(flecha(824, 360, 886, 360, ACENTO, 2.2))
+    p.append(caja(890, 340, 130, 40, PANEL, ACENTO, radio=8))
+    p.append(teclado(955, 366, "sum()", ACENTO, 15))
+    p.append(texto(810, 414, "uno a la vez: la memoria queda fija", ACENTO, 14))
+    p.append(cierre())
+    return "".join(p)
+
 DIAGRAMAS = {
     "py-import": py_import,
     "py-mapa": py_mapa,
@@ -657,6 +917,11 @@ DIAGRAMAS = {
     "py-nombres": py_nombres,
     "py-gil": py_gil,
     "py-sintomas": py_sintomas,
+    "py-stack-mapa": py_stack_mapa,
+    "py-stack-frontera": py_stack_frontera,
+    "py-stack-lazy": py_stack_lazy,
+    "py-stack-arrow": py_stack_arrow,
+    "py-stack-generador": py_stack_generador,
 }
 
 

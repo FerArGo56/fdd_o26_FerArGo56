@@ -128,6 +128,14 @@ events:
     title: "Python por dentro: el intérprete, los nombres y el GIL"
     page: python-por-dentro
 
+  - id: session-15
+    kind: session
+    date: "2026-10-08"
+    start_time: "19:00"
+    end_time: "20:30"
+    title: "Elegir el stack: contratos, motores de tablas y formatos"
+    page: elegir-el-stack
+
   - id: asueto-noviembre
     kind: cancellation
     date: "2026-11-03"

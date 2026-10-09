@@ -7,6 +7,8 @@ Esta carpeta se copia completa, respetando el mirror:
 |---|---|---|
 | `ambientes/` | Los laboratorios de clase | `estudiantes/$GHUSER/09_python/ambientes/` |
 | `uv_docker/` | La entrega `tarea-09-uv-docker` | `estudiantes/$GHUSER/09_python/uv_docker/` |
+| `por_dentro/` | Labs y entrega `tarea-09-por-dentro` (9.2) | `estudiantes/$GHUSER/09_python/por_dentro/` |
+| `stack/` | Notebooks y entrega `tarea-09-stack` (9.3); tiene su propio ritual | `estudiantes/$GHUSER/09_python/stack/` |
 
 Los labs y la entrega viajan **juntos**, en el pull request de
 `tarea-09-uv-docker`: los dos viven en `09_python/`.
@@ -74,3 +76,10 @@ git push -u origin tarea-09-uv-docker
 
 Lo que tiene cada archivo y los pasos, en el tablero:
 https://rayalucaria.org/fdd_o26/python/ambientes/b-entregas/
+
+## stack/ (sección 9.3)
+
+`stack/` se copia en el ritual de la página «Elegir el stack», en su propia
+branch `tarea-09-stack`, y su entrega se sube sólo con
+`git add estudiantes/$GHUSER/09_python/stack`. Tablero:
+https://rayalucaria.org/fdd_o26/python/stack/a-entregas/
