@@ -34,8 +34,7 @@ funcion y haz el patrón típico es vistos=None y, adentro, if vistos is None:
 
 Síntoma: Parece ser que sin hilos y con hilos duran casi lo mismo aun que el 
 comentario promete 4 veces mas rapido
-Línea: El codigo parece estar bien lo que esta mal es el comentario que promete
-algo que no tiene por que ser cierrto 
+Línea: 59 
 Por qué pasa: Por que python tiene un GIL interno que no permite el computo
 paralelo
 Qué le pedirías a la IA: Borra el comentario que dice que es 4 veces más rapido
